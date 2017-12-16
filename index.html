@@ -1,0 +1,431 @@
+tart<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+    <title>Microservices for the frontend</title>
+
+    <link rel="stylesheet" href="css/reveal.css">
+    <link rel="stylesheet" href="css/theme/black.css">
+    <link rel="stylesheet" href="css/main.css">
+
+    <!-- Theme used for syntax highlighting of code -->
+    <link rel="stylesheet" href="lib/css/zenburn.css">
+
+    <!-- Printing and PDF exports -->
+    <script>
+      var link = document.createElement( 'link' );
+      link.rel = 'stylesheet';
+      link.type = 'text/css';
+      link.href = window.location.search.match( /print-pdf/gi ) ? 'css/print/pdf.css' : 'css/print/paper.css';
+      document.getElementsByTagName( 'head' )[0].appendChild( link );
+    </script>
+  </head>
+  <body>
+    <div class="reveal">
+      <div class="slides">
+        <section>
+          <h1>Microservices for the frontend</h1>
+          <p>Maurizio Lupo @sithmel</p>
+          <aside class="notes">
+            Good evening and thanks for having me. In this session I am going to talk about microservices, in particular what issues we found integrating microservices in the frontend.
+          </aside>
+        </section>
+        <section data-transition="fade">
+          <h2>About myself</h2>
+          <p>Software engineer for TES Global</p>
+          <img width="350" class="photo-1" src="assets/me2.jpg" />
+          <aside class="notes">
+            But first thing first, allow to introduce myself. My name is Maurizio Lupo, I am a software engineer for tes global.
+          </aside>
+        </section>
+        <section>
+          <img src="assets/logo.svg" />
+          <blockquote>Tes Global is a digital education company that has been supporting educators for over 100 years. Tes is a community dedicated to supporting, inspiring and connecting educators everywhere; while Times Higher Education provides data and insights that drive excellence in the world’s leading universities</blockquote>
+          <aside class="notes">
+          </aside>
+        </section>
+        <section data-background="assets/engineering.jpg">
+          <h2>Our team</h2>
+          <aside class="notes">
+
+          </aside>
+        </section>
+        <section>
+          <h2>We love microservices</h2>
+          <p>insert a picture here</p>
+          <aside class="notes">
+            We are an estabilished digital businness, and as many others we found ourselves with a huge (.net) monolith. A monolith that was slowing us down, in a critical moment where our market was changing rapidly.
+            In the last 2 years we underwent a big change, from this monolith to a battery of node.js microservices. Up to this point this is a classic happy ending story, you probably heard many times. I could show you how we improved the speed of the release cycle, but the real focus of this topic is how we dealt with the frontend.
+          </aside>
+        </section>
+        <section data-transition="fade">
+          <h2>Frontend integration</h2>
+          <img src="assets/ms0.svg" />
+          <aside class="notes">
+            We took the architecture decision of exposing the frontend of a series of microservices in the browser.
+          </aside>
+        </section>
+        <section data-transition="fade">
+          <h2>Frontend integration</h2>
+          <img src="assets/ms1.svg" />
+          <aside class="notes">
+            We are able to do this thanks to compoxure.
+          </aside>
+        </section>
+        <section data-background="white" data-transition="fade">
+          <h2>Compoxure</h2>
+          <img src="assets/cx2.svg"></img>
+          <aside class="notes">
+            Compoxure is an http proxy that provides the integration of many microservices merging all fragments coming from them in a single html page.
+            It works this way: a request is routed to a microservice passing through compoxure
+          </aside>
+        </section>
+        <section data-background="white" data-transition="fade">
+          <h2>Compoxure</h2>
+          <img src="assets/cx4.svg"></img>
+          <aside class="notes">
+            the microservice returns a page, where the secondary content is missing. And instead is marked by special tags.
+          </aside>
+        </section>
+        <section data-background="white" data-transition="fade">
+          <h2>Compoxure</h2>
+          <img src="assets/cx6.svg"></img>
+          <aside class="notes">
+            These cx tags instruct compoxure to get fragments from different microservices
+            The page is composed and delivered to the browser
+          </aside>
+        </section>
+
+        <section data-transition="fade">
+          <h2>Compoxure</h2>
+          <h4>performance and fallback</h4>
+          <aside class="notes">
+            Compoxure manages also the caching of these fragments. It also tries to fallback to a stale cached version of a service rather than fail if the microservice is down.
+          </aside>
+        </section>
+
+
+        <section data-background="white" data-transition="fade">
+          <h4>Compoxure</h4>
+          <img src="assets/cxredis-1-cache.svg"></img>
+          <aside class="notes">
+          </aside>
+        </section>
+
+        <section data-background="white" data-transition="fade">
+          <h4>Compoxure</h4>
+          <img src="assets/cxredis-2-cache.svg"></img>
+          <aside class="notes">
+          </aside>
+        </section>
+
+        <section data-background="white" data-transition="fade">
+          <h4>Compoxure</h4>
+          <img src="assets/cxredis-3-cache.svg"></img>
+          <aside class="notes">
+          </aside>
+        </section>
+
+        <section data-background="white" data-transition="fade">
+          <h4>Compoxure</h4>
+          <img src="assets/cxredis-4-fallback.svg"></img>
+          <aside class="notes">
+          </aside>
+        </section>
+
+        <section data-transition="fade">
+          <h4>Compoxure debugger</h4>
+          <img src="assets/timings.png" style="max-width: 300px;"></img>
+          <aside class="notes">
+            Compoxure also includes extra features to easily debug in the browser
+          </aside>
+        </section>
+
+        <section>
+          <h2>Client side JS issue</h2>
+          <ol>
+            <li class="fragment">Namespace conflicts</li>
+            <li class="fragment">Common libraries</li>
+            <li class="fragment">Microservices communication</li>
+          </ol>
+          <aside class="notes">
+            So here it is, services are well isolated each other. And compoxure is taking care of both performance (with caching) and reliability (fallback). If only there was no client side javascript!
+            Yes, because the issue as soon as the content reaches the browser is having more than one application coexisting and also cooperate with the others.
+          </aside>
+        </section>
+        <section>
+          <h2>A good solution should:</h2>
+          <ul>
+            <li class="fragment">be performant!</li>
+            <li class="fragment">keep services independent</li>
+          </ul>
+          <aside class="notes">
+            Before explaining all solutions I would like to explain some design principle I used to tell if a solution was good or not
+            We can't propose a solution that harm the performance or the SEO. Mobile performance are vital for a global businness. We need to value our user's time!
+            Indipendence is very important for microservices. It allows:
+            * develop easily locally
+            * deploy independently
+            * reuse different services in different environments/pages
+          </aside>
+        </section>
+        <section>
+          <h4>Issue 1: Namespace conflicts</h4>
+          <p> add bundler images </p>
+          <pre><code data-trim data-noescape>
+            ...
+            &lt;script async src="mservice1.js"&gt;&lt;/script&gt;
+            ...
+            &lt;script async src="mservice2.js"&gt;&lt;/script&gt;
+          </code></pre>
+          <aside class="notes">
+            Here is the first issue. How to manage client side javascript?
+            If you, like many bundle your scripts using browserify or webpack you are already one step ahead! Bundling allow to not pollute the global namespace and to keep the frontend applications decoupled.
+          </aside>
+        </section>
+        <section>
+          <h4>Issue 2: common libraries</h4>
+          <img src="assets/ms3.svg" />
+          <aside class="notes">
+            There is an issue though. I can have many different microservices in a single page, isn't it a shame loading the same library, react for example, multiple times?
+          </aside>
+        </section>
+
+        <section>
+          <h4>Easy solution<span class="fragment"> Not!</span></h4>
+          <pre><code data-trim data-noescape>
+            &lt;script src="react.js"&gt;&lt;/script&gt;
+            ...
+            &lt;script async src="mservice1.js"&gt;&lt;/script&gt;
+            ...
+            &lt;script async src="mservice2.js"&gt;&lt;/script&gt;
+          </code></pre>
+          <ul>
+            <li class="fragment">Service independence?</li>
+            <li class="fragment">Polluting global namespace</li>
+            <li class="fragment">Synchronous js problem</li>
+          </ul>
+          <aside class="notes">
+            We could put global libraries in the global namespace. But this conflicts with both our principles:
+            * performance wise, forces us to load all common libraries synchronously
+            * different version of the same library conflicts each other in the global namespace
+          </aside>
+        </section>
+        <section>
+          <h4>Performance: Synchronous js problem</h4>
+          <img src="assets/perf2.png" />
+          <aside class="notes">
+          </aside>
+        </section>
+        <section>
+          <h4>Performance: Synchronous js problem</h4>
+          <img src="assets/perf1.png" />
+          <aside class="notes">
+          </aside>
+        </section>
+        <section>
+          <h4>A different approach</h4>
+          <h2>async-define</h2>
+          <aside class="notes">
+            async-define is a AMD runner, someone of you probably used requirejs. Requirejs used AMD as a system to define a module,
+            If you have used requirejs you know that bundling many amd modules together, in the right order is necessary. Every time a new dependency is required requirejs triggers a download. This may lead to a waterfall of downloads.
+            Async-define avoided completely this issue. async-define uses AMD to synchronise the execution of multiple scripts. You, as a web author have to put all required script tags in the page. Async-define manages only the execution order.
+          </aside>
+        </section>
+        <section>
+          <h4>async-define: define your dependencies</h4>
+          <pre><code data-trim data-noescape>
+            var React = require('react');
+            var ReactDOM = require('react-dom');
+            var asyncDefine = require('asyncDefine');
+
+            asyncDefine('react-16', function (){
+              return React;
+            });
+
+            asyncDefine('react-dom-16', function (){
+              return ReactDOM;
+            });
+          </code></pre>
+          <aside class="notes">
+          </aside>
+        </section>
+        <section>
+          <h4>async-define: use your dependencies</h4>
+          <pre><code data-trim data-noescape>
+            var asyncDefine = require('asyncDefine');
+
+            asyncDefine(['react-16', 'react-dom-16'],
+            function (react, reactDOM){
+              ... your code runs here ...
+            });
+          </code></pre>
+          <aside class="notes">
+          </aside>
+        </section>
+
+        <section>
+          <h4>Importing the bundles</h4>
+          <pre><code data-trim data-noescape>
+            &lt;script async src="react_ad.js"&gt;&lt;/script&gt;
+            ...
+            &lt;script async src="mservice1_ad.js"&gt;&lt;/script&gt;
+            ...
+            &lt;script async src="mservice2_ad.js"&gt;&lt;/script&gt;
+          </code></pre>
+          <aside class="notes">
+          </aside>
+        </section>
+
+        <section>
+          <h5>Keeping independence with duplications</h5>
+          <pre><code data-trim data-noescape>
+            ...
+            &lt;script async src="react_ad.js"&gt;&lt;/script&gt;
+            &lt;script async src="mservice1_ad.js"&gt;&lt;/script&gt;
+            ...
+            &lt;script src="react_ad.js"&gt;&lt;/script&gt;
+            &lt;script async src="mservice2_ad.js"&gt;&lt;/script&gt;
+          </code></pre>
+					<ul>
+            <li class="fragment">An async-define dependency runs only once</li>
+						<li class="fragment">Many browsers load the same resource only once</li>
+            <li class="fragment">Compoxure removes duplicate libraries</li>
+          </ul>
+          <aside class="notes">
+            For increasing the independence I also advise to load the common bundle once for every service. It may look as a waste, but you should take into consideration that:
+            * async-define prevents a dependency to be executed more than once
+            * many browsers already load the same resource only once
+            * compoxure prevents this when using the cx-bundles/cx-library
+          </aside>
+        </section>
+
+        <section>
+          <h2>Async-define</h2>
+          <ul>
+            <li class="fragment">no need to load dependencies synchronously</li>
+            <li class="fragment">no namespace pollution</li>
+            <li class="fragment">Multiple libraries version</li>
+          </ul>
+          <aside class="notes">
+          </aside>
+        </section>
+        <section>
+          <h2>Async-define</h2>
+          <h4>Use bundle plugins</h4>
+          <ul>
+            <li class="fragment">browserify</li>
+            <li class="fragment">webpack</li>
+            <li class="fragment">rollup</li>
+          </ul>
+          <aside class="notes">
+          </aside>
+        </section>
+
+        <section>
+          <h2>Async-define with webpack</h2>
+          <pre><code data-trim data-noescape>
+            const WPAsyncDefine = require('webpack-async-define');
+            module.exports = {
+              entry: './app.js',
+              externals: {
+                react: 'react-16',
+                'react-dom': 'reactdom-16'
+              },
+              plugins: [
+                new WPAsyncDefine()
+              ],
+              output: {
+                filename: 'mservice1_ad.js'
+              }
+            };
+          </code></pre>
+          <aside class="notes">
+          </aside>
+        </section>
+
+				<section>
+          <h2>Issue 3</h2>
+					<h4>Microservices communication</h4>
+          <aside class="notes">
+						Last but not least, how can different applications can communicate each others?
+						The main point here is that every application should be able to run independently, and not be tightly coupled to others. The easiest way is to introduce a pub/sub library in global namespace of your page.
+          </aside>
+        </section>
+
+        <section data-background="white">
+          <h4>Solution: use an event bus</h4>
+          <img src="assets/event-bus.svg" />
+          <aside class="notes">
+						The easiest way is to introduce a pub/sub library in global namespace of your page.
+          </aside>
+        </section>
+        <section>
+          <h2>occamsrazor</h2>
+					<h4>Expose the bus in the global namespace</h4>
+					<pre><code data-trim data-noescape>
+						const or = require('occamsrazor');
+						window.eventBus = or();
+          </code></pre>
+          <aside class="notes">
+          </aside>
+        </section>
+				<section>
+          <h2>occamsrazor</h2>
+					<h4>Subscribe an event</h4>
+					<pre><code data-trim data-noescape>
+						window.eventBus.on('login', (event, obj) => {
+              ... do something when logged in ...
+						});
+          </code></pre>
+          <aside class="notes">
+          </aside>
+        </section>
+				<section>
+          <h2>occamsrazor</h2>
+					<h4>trigger an event</h4>
+					<pre><code data-trim data-noescape>
+						window.eventBus.trigger('login', { username: 'Maurizio' });
+          </code></pre>
+          <aside class="notes">
+          </aside>
+        </section>
+
+        <section>
+          <h2>occamsrazor</h2>
+					<ul>
+            <li class="fragment">lightweight</li>
+						<li class="fragment">ton of features</li>
+						<li class="fragment">broadcast across windows/iframes/tabs</li>
+						<li class="fragment">can bridge history API (pushstate, popstate)</li>
+          </ul>
+          <aside class="notes">
+          </aside>
+        </section>
+        <section>
+          <h2>Thanks</h2>
+          <aside class="notes">
+          </aside>
+        </section>
+      </div>
+    </div>
+
+    <script src="lib/js/head.min.js"></script>
+    <script src="js/reveal.js"></script>
+
+    <script>
+      // More info about config & dependencies:
+      // - https://github.com/hakimel/reveal.js#configuration
+      // - https://github.com/hakimel/reveal.js#dependencies
+      Reveal.initialize({
+        dependencies: [
+          { src: 'plugin/markdown/marked.js' },
+          { src: 'plugin/markdown/markdown.js' },
+          { src: 'plugin/notes/notes.js', async: true },
+          { src: 'plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } }
+        ]
+      });
+    </script>
+  </body>
+</html>
