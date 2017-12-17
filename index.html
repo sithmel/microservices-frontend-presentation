@@ -25,7 +25,7 @@ tart<!doctype html>
   <body>
     <div class="reveal">
       <div class="slides">
-        <section>
+        <section data-background="assets/code.jpg" class="panel">
           <h1>Microservices for the frontend</h1>
           <p>Maurizio Lupo @sithmel</p>
           <aside class="notes">
@@ -34,8 +34,8 @@ tart<!doctype html>
         </section>
         <section data-transition="fade">
           <h2>About myself</h2>
-          <p>Software engineer for TES Global</p>
           <img width="350" class="photo-1" src="assets/me2.jpg" />
+					<p>Software engineer for TES Global</p>
           <aside class="notes">
             But first thing first, allow to introduce myself. My name is Maurizio Lupo, I am a software engineer for tes global.
           </aside>
@@ -46,15 +46,14 @@ tart<!doctype html>
           <aside class="notes">
           </aside>
         </section>
-        <section data-background="assets/engineering.jpg">
+        <section class="panel" data-background="assets/engineering.jpg">
           <h2>Our team</h2>
           <aside class="notes">
 
           </aside>
         </section>
-        <section>
-          <h2>We love microservices</h2>
-          <p>insert a picture here</p>
+        <section data-background="assets/hearts.jpg">
+          <h2>We <span class="heart">💖</span> microservices</h2>
           <aside class="notes">
             We are an estabilished digital businness, and as many others we found ourselves with a huge (.net) monolith. A monolith that was slowing us down, in a critical moment where our market was changing rapidly.
             In the last 2 years we underwent a big change, from this monolith to a battery of node.js microservices. Up to this point this is a classic happy ending story, you probably heard many times. I could show you how we improved the speed of the release cycle, but the real focus of this topic is how we dealt with the frontend.
@@ -74,6 +73,17 @@ tart<!doctype html>
             We are able to do this thanks to compoxure.
           </aside>
         </section>
+				<section data-transition="fade">
+          <h2>Frontend integration</h2>
+          <img src="assets/ms4.svg" />
+          <aside class="notes">
+            We are able to do this thanks to compoxure.
+          </aside>
+        </section>
+				<section data-background="assets/puzzle.jpg" class="panel">
+          <h2>Compoxure</h2>
+					<p>A proxy server for page composition</p>
+				</section>
         <section data-background="white" data-transition="fade">
           <h2>Compoxure</h2>
           <img src="assets/cx2.svg"></img>
@@ -98,7 +108,21 @@ tart<!doctype html>
           </aside>
         </section>
 
-        <section data-transition="fade">
+				<section data-transition="fade">
+          <h4>Compoxure</h4>
+					<pre><code data-trim data-noescape>
+&lt;div cx-url="{{server:local}}/application/"&gt;
+
+  This content will be replaced
+
+&lt;/div&gt;
+					</code></pre>
+
+					<aside class="notes">
+          </aside>
+        </section>
+
+        <section data-transition="fade" data-background="assets/accident.jpg" class="panel">
           <h2>Compoxure</h2>
           <h4>performance and fallback</h4>
           <aside class="notes">
@@ -110,6 +134,7 @@ tart<!doctype html>
         <section data-background="white" data-transition="fade">
           <h4>Compoxure</h4>
           <img src="assets/cxredis-1-cache.svg"></img>
+					<p>Page or fragment not cached</p>
           <aside class="notes">
           </aside>
         </section>
@@ -117,6 +142,7 @@ tart<!doctype html>
         <section data-background="white" data-transition="fade">
           <h4>Compoxure</h4>
           <img src="assets/cxredis-2-cache.svg"></img>
+					<p>Page or fragment cached</p>
           <aside class="notes">
           </aside>
         </section>
@@ -124,6 +150,7 @@ tart<!doctype html>
         <section data-background="white" data-transition="fade">
           <h4>Compoxure</h4>
           <img src="assets/cxredis-3-cache.svg"></img>
+					<p>Stale cache: ask for fresh page/fragment</p>
           <aside class="notes">
           </aside>
         </section>
@@ -131,6 +158,7 @@ tart<!doctype html>
         <section data-background="white" data-transition="fade">
           <h4>Compoxure</h4>
           <img src="assets/cxredis-4-fallback.svg"></img>
+					<p>Errors on backend service: return cache (even if stale)</p>
           <aside class="notes">
           </aside>
         </section>
@@ -143,26 +171,19 @@ tart<!doctype html>
           </aside>
         </section>
 
-        <section>
-          <h2>Client side JS issue</h2>
-          <ol>
-            <li class="fragment">Namespace conflicts</li>
-            <li class="fragment">Common libraries</li>
-            <li class="fragment">Microservices communication</li>
-          </ol>
+        <section data-background="assets/paper.jpg" data-background-color="white" class="notebook">
+          <h2>Client side JS issues</h2>
+          <ul class="tickboxes">
+            <li class="fragment unticked"> Namespace conflicts</li>
+            <!-- <li class="fragment unticked"> Common libraries</li> -->
+						<li class="fragment unticked"> Frontend Performance</li>
+						<li class="fragment unticked"> Keep services independent</li>
+						<li class="fragment unticked"> Microservices communication</li>
+          </ul>
           <aside class="notes">
             So here it is, services are well isolated each other. And compoxure is taking care of both performance (with caching) and reliability (fallback). If only there was no client side javascript!
             Yes, because the issue as soon as the content reaches the browser is having more than one application coexisting and also cooperate with the others.
-          </aside>
-        </section>
-        <section>
-          <h2>A good solution should:</h2>
-          <ul>
-            <li class="fragment">be performant!</li>
-            <li class="fragment">keep services independent</li>
-          </ul>
-          <aside class="notes">
-            Before explaining all solutions I would like to explain some design principle I used to tell if a solution was good or not
+						Before explaining all solutions I would like to explain some design principle I used to tell if a solution was good or not
             We can't propose a solution that harm the performance or the SEO. Mobile performance are vital for a global businness. We need to value our user's time!
             Indipendence is very important for microservices. It allows:
             * develop easily locally
@@ -171,21 +192,30 @@ tart<!doctype html>
           </aside>
         </section>
         <section>
-          <h4>Issue 1: Namespace conflicts</h4>
-          <p> add bundler images </p>
+          <h4>Bundle client side js</h4>
+					<img width="100" src="assets/browserify.svg" />
+					<img width="100" src="assets/webpack.svg" />
+					<img width="100" src="assets/rollup.svg" />
           <pre><code data-trim data-noescape>
             ...
             &lt;script async src="mservice1.js"&gt;&lt;/script&gt;
             ...
             &lt;script async src="mservice2.js"&gt;&lt;/script&gt;
           </code></pre>
+					<ul class="tickboxes">
+            <li class="fragment ticked"> Namespace conflicts</li>
+            <!-- <li class="fragment unticked"> Common libraries</li> -->
+						<li class="fragment crossed"> Frontend Performance</li>
+          </ul>
+
+					<p class="fragment">What about duplicated libraries?</p>
           <aside class="notes">
             Here is the first issue. How to manage client side javascript?
             If you, like many bundle your scripts using browserify or webpack you are already one step ahead! Bundling allow to not pollute the global namespace and to keep the frontend applications decoupled.
           </aside>
         </section>
         <section>
-          <h4>Issue 2: common libraries</h4>
+          <h4>Duplicated libraries</h4>
           <img src="assets/ms3.svg" />
           <aside class="notes">
             There is an issue though. I can have many different microservices in a single page, isn't it a shame loading the same library, react for example, multiple times?
@@ -193,7 +223,7 @@ tart<!doctype html>
         </section>
 
         <section>
-          <h4>Easy solution<span class="fragment"> Not!</span></h4>
+          <h4>Libraries in global namespace</h4>
           <pre><code data-trim data-noescape>
             &lt;script src="react.js"&gt;&lt;/script&gt;
             ...
@@ -201,11 +231,12 @@ tart<!doctype html>
             ...
             &lt;script async src="mservice2.js"&gt;&lt;/script&gt;
           </code></pre>
-          <ul>
-            <li class="fragment">Service independence?</li>
-            <li class="fragment">Polluting global namespace</li>
-            <li class="fragment">Synchronous js problem</li>
+					<ul class="tickboxes">
+            <li class="fragment crossed"> Namespace conflicts</li>
+						<li class="fragment crossed"> Keep services independent</li>
+						<li class="fragment crossed"> Frontend Performance</li>
           </ul>
+          <p class="fragment">Synchronous js problem!</p>
           <aside class="notes">
             We could put global libraries in the global namespace. But this conflicts with both our principles:
             * performance wise, forces us to load all common libraries synchronously
@@ -213,59 +244,99 @@ tart<!doctype html>
           </aside>
         </section>
         <section>
-          <h4>Performance: Synchronous js problem</h4>
+          <h4>Synchronous js on mobile network</h4>
           <img src="assets/perf2.png" />
           <aside class="notes">
           </aside>
         </section>
         <section>
-          <h4>Performance: Synchronous js problem</h4>
+          <h4>Synchronous js on mobile network</h4>
           <img src="assets/perf1.png" />
           <aside class="notes">
           </aside>
         </section>
         <section>
-          <h4>A different approach</h4>
           <h2>async-define</h2>
+					<p>wraps your scripts and ensure the execution order without polluting the global namespace</p>
           <aside class="notes">
+						AsyncDefine is not a module definition system, it doesn't trigger the download of the dependencies, it doesn't require, include or enforce any kind of package manager.
+
             async-define is a AMD runner, someone of you probably used requirejs. Requirejs used AMD as a system to define a module,
             If you have used requirejs you know that bundling many amd modules together, in the right order is necessary. Every time a new dependency is required requirejs triggers a download. This may lead to a waterfall of downloads.
             Async-define avoided completely this issue. async-define uses AMD to synchronise the execution of multiple scripts. You, as a web author have to put all required script tags in the page. Async-define manages only the execution order.
           </aside>
         </section>
+
+				<section>
+          <h4>Plugins for:</h4>
+					<div>
+						<img width="80" src="assets/browserify.svg" />
+						<img width="80" src="assets/webpack.svg" />
+						<img width="80" src="assets/rollup.svg" />
+					</div>
+          <ul>
+            <li>browserify</li>
+            <li>webpack</li>
+            <li>rollup</li>
+          </ul>
+          <aside class="notes">
+          </aside>
+        </section>
+				<section>
+          <h2>Async-define with webpack</h2>
+				</section>
+
         <section>
-          <h4>async-define: define your dependencies</h4>
+          <h4>Service1 webpack.config.js</h4>
           <pre><code data-trim data-noescape>
-            var React = require('react');
-            var ReactDOM = require('react-dom');
-            var asyncDefine = require('asyncDefine');
-
-            asyncDefine('react-16', function (){
-              return React;
-            });
-
-            asyncDefine('react-dom-16', function (){
-              return ReactDOM;
-            });
+            const WPAsyncDefine = require('webpack-async-define');
+            module.exports = {
+              entry: './app.js',
+              externals: {
+                react: 'react-16',
+              },
+              plugins: [
+                new WPAsyncDefine()
+              ],
+              output: {
+                filename: 'mservice1_ad.js'
+              }
+            };
           </code></pre>
           <aside class="notes">
           </aside>
         </section>
-        <section>
-          <h4>async-define: use your dependencies</h4>
-          <pre><code data-trim data-noescape>
-            var asyncDefine = require('asyncDefine');
 
-            asyncDefine(['react-16', 'react-dom-16'],
-            function (react, reactDOM){
-              ... your code runs here ...
-            });
+				<section>
+          <h4>react webpack.config.js</h4>
+          <pre><code data-trim data-noescape>
+            const WPAsyncDefine = require('webpack-async-define');
+            module.exports = {
+              entry: './react.js',
+              plugins: [
+                new WPAsyncDefine()
+              ],
+              output: {
+                filename: 'react_ad.js',
+                library: 'react-16',
+              }
+            };
           </code></pre>
           <aside class="notes">
           </aside>
         </section>
 
-        <section>
+				<section>
+          <h4>react async-define bundle</h4>
+          <pre><code data-trim data-noescape>
+						const react = require('react');
+						module.exports = react;
+          </code></pre>
+          <aside class="notes">
+          </aside>
+        </section>
+
+				<section>
           <h4>Importing the bundles</h4>
           <pre><code data-trim data-noescape>
             &lt;script async src="react_ad.js"&gt;&lt;/script&gt;
@@ -285,13 +356,13 @@ tart<!doctype html>
             &lt;script async src="react_ad.js"&gt;&lt;/script&gt;
             &lt;script async src="mservice1_ad.js"&gt;&lt;/script&gt;
             ...
-            &lt;script src="react_ad.js"&gt;&lt;/script&gt;
+            &lt;script async src="react_ad.js"&gt;&lt;/script&gt;
             &lt;script async src="mservice2_ad.js"&gt;&lt;/script&gt;
           </code></pre>
 					<ul>
             <li class="fragment">An async-define dependency runs only once</li>
-						<li class="fragment">Many browsers load the same resource only once</li>
-            <li class="fragment">Compoxure removes duplicate libraries</li>
+						<li class="fragment">Most browsers load the same resource only once (Chrome, IE10, Safari)</li>
+            <li class="fragment">Compoxure removes duplicated libraries</li>
           </ul>
           <aside class="notes">
             For increasing the independence I also advise to load the common bundle once for every service. It may look as a waste, but you should take into consideration that:
@@ -302,55 +373,42 @@ tart<!doctype html>
         </section>
 
         <section>
-          <h2>Async-define</h2>
-          <ul>
-            <li class="fragment">no need to load dependencies synchronously</li>
-            <li class="fragment">no namespace pollution</li>
-            <li class="fragment">Multiple libraries version</li>
+          <h2>Using async-define:</h2>
+					<ul class="tickboxes">
+            <li class="fragment ticked"> Namespace conflicts</li>
+						<li class="fragment ticked"> Keep services independent</li>
+						<li class="fragment ticked"> Frontend Performance</li>
           </ul>
-          <aside class="notes">
-          </aside>
-        </section>
-        <section>
-          <h2>Async-define</h2>
-          <h4>Use bundle plugins</h4>
-          <ul>
-            <li class="fragment">browserify</li>
-            <li class="fragment">webpack</li>
-            <li class="fragment">rollup</li>
-          </ul>
-          <aside class="notes">
-          </aside>
-        </section>
-
-        <section>
-          <h2>Async-define with webpack</h2>
-          <pre><code data-trim data-noescape>
-            const WPAsyncDefine = require('webpack-async-define');
-            module.exports = {
-              entry: './app.js',
-              externals: {
-                react: 'react-16',
-                'react-dom': 'reactdom-16'
-              },
-              plugins: [
-                new WPAsyncDefine()
-              ],
-              output: {
-                filename: 'mservice1_ad.js'
-              }
-            };
-          </code></pre>
           <aside class="notes">
           </aside>
         </section>
 
 				<section>
-          <h2>Issue 3</h2>
-					<h4>Microservices communication</h4>
+					<h4 class="unticked">Microservices communication</h4>
           <aside class="notes">
 						Last but not least, how can different applications can communicate each others?
 						The main point here is that every application should be able to run independently, and not be tightly coupled to others. The easiest way is to introduce a pub/sub library in global namespace of your page.
+          </aside>
+        </section>
+
+				<section>
+					<h4 class="ticked">Microservices communication</h4>
+					<p>mservice1:</p>
+					<pre><code data-trim data-noescape>
+						...
+						window.mservice1ExternalAPI = mservice1ExternalAPI;
+          </code></pre>
+					<p>myservice2:</p>
+					<pre><code data-trim data-noescape>
+						...
+						window.mservice1ExternalAPI.do();
+						...
+          </code></pre>
+					<ul class="tickboxes">
+            <li class="fragment crossed"> Namespace conflicts</li>
+						<li class="fragment crossed"> Keep services independent</li>
+          </ul>
+          <aside class="notes">
           </aside>
         </section>
 
@@ -361,6 +419,15 @@ tart<!doctype html>
 						The easiest way is to introduce a pub/sub library in global namespace of your page.
           </aside>
         </section>
+				<section>
+					<h4>Solution: use an event bus</h4>
+					<ul class="tickboxes">
+						<li class="fragment ticked"> Microservices communication</li>
+						<li class="fragment ticked"> Namespace conflicts</li>
+						<li class="fragment ticked"> Keep services independent</li>
+					</ul>
+				</section>
+
         <section>
           <h2>occamsrazor</h2>
 					<h4>Expose the bus in the global namespace</h4>
@@ -396,7 +463,7 @@ tart<!doctype html>
           <h2>occamsrazor</h2>
 					<ul>
             <li class="fragment">lightweight</li>
-						<li class="fragment">ton of features</li>
+						<li class="fragment">tons of features</li>
 						<li class="fragment">broadcast across windows/iframes/tabs</li>
 						<li class="fragment">can bridge history API (pushstate, popstate)</li>
           </ul>
@@ -404,7 +471,20 @@ tart<!doctype html>
           </aside>
         </section>
         <section>
-          <h2>Thanks</h2>
+          <h2>Links</h2>
+					<ul>
+						<li><a href="https://github.com/tes/compoxure">compoxure</a></li>
+						<li><a href="https://github.com/tes/async-define">async-define</a></li>
+						<li><a href="https://github.com/tes/webpack-async-define">async-define webpack plugin</a></li>
+						<li><a href="https://github.com/tes/rollup-plugin-async-define">async-define rollup plugin</a></li>
+						<li><a href="https://github.com/tes/browserify-async-define">async-define browserify plugin</a></li>
+						<li><a href="https://github.com/sithmel/occamsrazor.js">occamsrazor</a></li>
+						<li><a href="https://github.com/sithmel/occamsrazor-broadcast-browser">occamsrazor broadcast plugin</a></li>
+					</ul>
+          <aside class="notes">
+          </aside>
+        </section>
+				<section data-background="assets/thanks.jpg">
           <aside class="notes">
           </aside>
         </section>

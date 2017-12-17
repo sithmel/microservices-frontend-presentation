@@ -20,14 +20,84 @@
 
 .reveal section .photo {
 }
-.reveal section .photo-1 {
-  box-shadow: 0 0 0 10px red, 0 0 0 20px white, 0 0 0 30px green;
-  transform: rotate(-3deg) translateY(10px);
+
+@keyframes swing {
+  from {
+    transform: rotate(2deg);
+  }
+
+  to {
+    transform: rotate(-2deg);
+  }
 }
-.photo-2 {
-  transform: rotate(2deg);
+
+.reveal section .photo-1 {
+  box-shadow: 0 0 0 10px red, 0 0 0 20px white, 0 0 0 30px green, 4px 4px 5px 30px black;
+  display: inline-block;
+  margin: 40px;
+  animation-name: swing;
+  animation-duration: 1.7s;
+  animation-direction: alternate;
+  animation-iteration-count: infinite;
+  animation-timing-function: ease;
+  transform-origin: center top;
 }
 
 blockquote {
   font-size: 25px !important;
+}
+
+.reveal .tickboxes {
+  list-style-type: none;
+}
+
+.unticked:before {
+  content: '☐';
+  margin-right: 10px;
+  position: relative;
+  top: 2px;
+}
+
+.ticked:before {
+  content: '☑';
+  color:green;
+  margin-right: 10px;
+  position: relative;
+  top: 2px;
+}
+
+.crossed:before {
+  content: '☒';
+  color:red;
+  margin-right: 10px;
+  position: relative;
+  top: 2px;
+}
+
+@keyframes beat {
+  from {
+    transform: scale(0.8);
+  }
+
+  to {
+    transform: scale(1.2);
+  }
+}
+
+.heart{
+  color: red;
+  display: inline-block;
+  animation-duration: 0.7s;
+  animation-name: beat;
+  animation-direction: alternate;
+  animation-iteration-count: infinite;
+  animation-timing-function: ease;
+}
+
+.panel{
+  background-color: rgba(0,0,0,0.7);
+  border-radius: 40px 40px 0px 0px;
+}
+.notebook > * {
+  transform: rotate(-1deg);
 }
