@@ -202,18 +202,20 @@ tart<!doctype html>
             ...
             &lt;script async src="mservice2.js"&gt;&lt;/script&gt;
           </code></pre>
-					<ul class="tickboxes">
-            <li class="fragment ticked"> Namespace conflicts</li>
-            <!-- <li class="fragment unticked"> Common libraries</li> -->
-						<li class="fragment crossed"> Frontend Performance</li>
-          </ul>
-
-					<p class="fragment">What about duplicated libraries?</p>
           <aside class="notes">
             Here is the first issue. How to manage client side javascript?
             If you, like many bundle your scripts using browserify or webpack you are already one step ahead! Bundling allow to not pollute the global namespace and to keep the frontend applications decoupled.
           </aside>
         </section>
+				<section data-background="assets/paper.jpg" data-background-color="white" class="notebook">
+					<h4>Bundle client side js</h4>
+          <ul class="tickboxes">
+            <li class="fragment ticked"> Namespace conflicts</li>
+						<li class="fragment crossed"> Frontend Performance</li>
+          </ul>
+					<p class="fragment">What about duplicated libraries?</p>
+				</section>
+
         <section>
           <h4>Duplicated libraries</h4>
           <img src="assets/ms3.svg" />
@@ -231,18 +233,22 @@ tart<!doctype html>
             ...
             &lt;script async src="mservice2.js"&gt;&lt;/script&gt;
           </code></pre>
-					<ul class="tickboxes">
-            <li class="fragment crossed"> Namespace conflicts</li>
-						<li class="fragment crossed"> Keep services independent</li>
-						<li class="fragment crossed"> Frontend Performance</li>
-          </ul>
-          <p class="fragment">Synchronous js problem!</p>
           <aside class="notes">
             We could put global libraries in the global namespace. But this conflicts with both our principles:
             * performance wise, forces us to load all common libraries synchronously
             * different version of the same library conflicts each other in the global namespace
           </aside>
         </section>
+				<section data-background="assets/paper.jpg" data-background-color="white" class="notebook">
+					<h4>Libraries in global namespace</h4>
+					<ul class="tickboxes">
+            <li class="fragment crossed"> Namespace conflicts</li>
+						<li class="fragment crossed"> Keep services independent</li>
+						<li class="fragment crossed"> Frontend Performance</li>
+          </ul>
+          <p class="fragment">Synchronous js problem!</p>
+				</section>
+
         <section>
           <h4>Synchronous js on mobile network</h4>
           <img src="assets/perf2.png" />
@@ -372,8 +378,8 @@ tart<!doctype html>
           </aside>
         </section>
 
-        <section>
-          <h2>Using async-define:</h2>
+				<section data-background="assets/paper.jpg" data-background-color="white" class="notebook">
+          <h4>Using async-define:</h4>
 					<ul class="tickboxes">
             <li class="fragment ticked"> Namespace conflicts</li>
 						<li class="fragment ticked"> Keep services independent</li>
@@ -384,26 +390,26 @@ tart<!doctype html>
         </section>
 
 				<section>
-					<h4 class="unticked">Microservices communication</h4>
+					<h4>Microservices communication</h4>
+					<p>mservice1:</p>
+					<pre><code data-trim data-noescape>
+						...
+						window.mservice1ExternalAPI = mservice1ExternalAPI;
+          </code></pre>
+					<p>mservice2:</p>
+					<pre><code data-trim data-noescape>
+						...
+						window.mservice1ExternalAPI.do();
+						...
+          </code></pre>
           <aside class="notes">
 						Last but not least, how can different applications can communicate each others?
 						The main point here is that every application should be able to run independently, and not be tightly coupled to others. The easiest way is to introduce a pub/sub library in global namespace of your page.
           </aside>
         </section>
 
-				<section>
-					<h4 class="ticked">Microservices communication</h4>
-					<p>mservice1:</p>
-					<pre><code data-trim data-noescape>
-						...
-						window.mservice1ExternalAPI = mservice1ExternalAPI;
-          </code></pre>
-					<p>myservice2:</p>
-					<pre><code data-trim data-noescape>
-						...
-						window.mservice1ExternalAPI.do();
-						...
-          </code></pre>
+				<section data-background="assets/paper.jpg" data-background-color="white" class="notebook">
+					<h4>Microservices communication</h4>
 					<ul class="tickboxes">
             <li class="fragment crossed"> Namespace conflicts</li>
 						<li class="fragment crossed"> Keep services independent</li>
@@ -419,7 +425,7 @@ tart<!doctype html>
 						The easiest way is to introduce a pub/sub library in global namespace of your page.
           </aside>
         </section>
-				<section>
+				<section data-background="assets/paper.jpg" data-background-color="white" class="notebook">
 					<h4>Solution: use an event bus</h4>
 					<ul class="tickboxes">
 						<li class="fragment ticked"> Microservices communication</li>
@@ -429,7 +435,6 @@ tart<!doctype html>
 				</section>
 
         <section>
-          <h2>occamsrazor</h2>
 					<h4>Expose the bus in the global namespace</h4>
 					<pre><code data-trim data-noescape>
 						const or = require('occamsrazor');
@@ -439,28 +444,42 @@ tart<!doctype html>
           </aside>
         </section>
 				<section>
-          <h2>occamsrazor</h2>
-					<h4>Subscribe an event</h4>
+					<h4>Using an event bus</h4>
+				</section>
+				<section>
+					<h4>app-job-ad</h4>
+					<img width="500" src="assets/login/1.png" />
 					<pre><code data-trim data-noescape>
-						window.eventBus.on('login', (event, obj) => {
-              ... do something when logged in ...
+						window.eventBus.trigger('open-login');
+          </code></pre>
+				</section>
+				<section>
+					<h4>app-authentication</h4>
+					<img width="500" src="assets/login/2.png" />
+					<pre><code data-trim data-noescape>
+						window.eventBus.on('open-login', (event) => {
+              ... open the login modal ...
 						});
           </code></pre>
-          <aside class="notes">
-          </aside>
-        </section>
+				</section>
 				<section>
-          <h2>occamsrazor</h2>
-					<h4>trigger an event</h4>
+					<h4>app-authentication</h4>
+					<img width="500" src="assets/login/3.png" />
 					<pre><code data-trim data-noescape>
-						window.eventBus.trigger('login', { username: 'Maurizio' });
+						window.eventBus.trigger('logged-in', 'sithmel3');
           </code></pre>
-          <aside class="notes">
-          </aside>
-        </section>
-
+				</section>
+				<section>
+					<h4>app-job-ad</h4>
+					<img width="500" src="assets/login/4.png" />
+					<pre><code data-trim data-noescape>
+						window.eventBus.on('logged-in', (event, username) => {
+              ... redirect to "apply" page ...
+						});
+          </code></pre>
+				</section>
         <section>
-          <h2>occamsrazor</h2>
+          <h4>occamsrazor</h4>
 					<ul>
             <li class="fragment">lightweight</li>
 						<li class="fragment">tons of features</li>
