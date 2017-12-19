@@ -48,13 +48,13 @@ Tes Global is a digital education company that has been supporting educators for
         <section data-background="assets/engineering.jpg">
           <h6 class="panel">Our team</h6>
           <aside class="notes">
-
+This is our team.
           </aside>
         </section>
         <section data-background="assets/hearts.jpg">
           <h2>We <span class="heart">💖</span> microservices</h2>
           <aside class="notes">
-            We are an estabilished digital businness, and as many others we found ourselves with a huge (.net) monolith. A monolith that was slowing us down, in a critical moment where our market was changing rapidly.
+            We are an estabilished digital business, and as many others we found ourselves with a huge (.net) monolith. A monolith that was slowing us down, in a critical moment where our market was changing rapidly.
             In the last 2 years we underwent a big change, from this monolith to a battery of node.js microservices. Up to this point this is a classic happy ending story, you probably heard many times. I could show you how we improved the speed of the release cycle, but the real focus of this topic is how we dealt with the frontend.
           </aside>
         </section>
@@ -82,20 +82,23 @@ Tes Global is a digital education company that has been supporting educators for
 				<section data-background="assets/puzzle.jpg" class="panel panel-2">
           <h2>Compoxure</h2>
 					<p>A proxy server for page composition</p>
+					<aside class="notes">
+						We are able to do this thanks to compoxure.
+						Compoxure is an http proxy that provides the integration of many microservices merging all fragments coming from them in a single html page.
+          </aside>
 				</section>
         <section data-background="white">
           <h2>Compoxure</h2>
           <img src="assets/cx2.svg"></img>
           <aside class="notes">
-            Compoxure is an http proxy that provides the integration of many microservices merging all fragments coming from them in a single html page.
-            It works this way: a request is routed to a microservice passing through compoxure
+						It works this way: a request is routed to a microservice passing through compoxure
           </aside>
         </section>
         <section data-background="white">
           <h2>Compoxure</h2>
           <img src="assets/cx4.svg"></img>
           <aside class="notes">
-            the microservice returns a page, where the secondary content is missing. And instead is marked by special tags.
+						the microservice returns a page, where the secondary content is missing. And instead is marked by special tags.
           </aside>
         </section>
         <section data-background="white">
@@ -118,6 +121,7 @@ Tes Global is a digital education company that has been supporting educators for
 					</code></pre>
 
 					<aside class="notes">
+						this is an example of these special tags
           </aside>
         </section>
 
@@ -135,6 +139,7 @@ Tes Global is a digital education company that has been supporting educators for
           <img src="assets/cxredis-1-cache.svg"></img>
 					<p>Page or fragment not cached</p>
           <aside class="notes">
+In this example an fragment is not in the cache and is requested from the main service
           </aside>
         </section>
 
@@ -143,6 +148,7 @@ Tes Global is a digital education company that has been supporting educators for
           <img src="assets/cxredis-2-cache.svg"></img>
 					<p>Page or fragment cached</p>
           <aside class="notes">
+						If the fragment is cached is returned without calling the service
           </aside>
         </section>
 
@@ -151,6 +157,7 @@ Tes Global is a digital education company that has been supporting educators for
           <img src="assets/cxredis-3-cache.svg"></img>
 					<p>Stale cache: ask for fresh page/fragment</p>
           <aside class="notes">
+						If the fragment is in the cache but is a bit old we might ask the original service from a fresh copy
           </aside>
         </section>
 
@@ -159,6 +166,7 @@ Tes Global is a digital education company that has been supporting educators for
           <img src="assets/cxredis-4-fallback.svg"></img>
 					<p>Errors on backend service: return cache (even if stale)</p>
           <aside class="notes">
+						But if the service returns an error or times out we can still use the stale copy as a fallback
           </aside>
         </section>
 
@@ -174,7 +182,6 @@ Tes Global is a digital education company that has been supporting educators for
           <h2>Client side JS issues</h2>
           <ul class="tickboxes">
             <li class="fragment unticked"> Namespace conflicts</li>
-            <!-- <li class="fragment unticked"> Common libraries</li> -->
 						<li class="fragment unticked"> Frontend Performance</li>
 						<li class="fragment unticked"> Keep services independent</li>
 						<li class="fragment unticked"> Microservices communication</li>
@@ -190,6 +197,8 @@ Tes Global is a digital education company that has been supporting educators for
             * reuse different services in different environments/pages
           </aside>
         </section>
+				<section data-background="assets/jenga.jpg">
+				</section>
         <section>
           <h4>Bundle client side js</h4>
 					<img width="100" src="assets/browserify.svg" />
