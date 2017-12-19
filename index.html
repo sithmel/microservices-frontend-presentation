@@ -1,4 +1,4 @@
-tart<!doctype html>
+<!doctype html>
 <html>
   <head>
     <meta charset="utf-8">
@@ -26,28 +26,27 @@ tart<!doctype html>
     <div class="reveal">
       <div class="slides">
         <section data-background="assets/code.jpg" class="panel">
-          <h1>Microservices for the frontend</h1>
-          <p>Maurizio Lupo @sithmel</p>
+          <h3>Microservices for the frontend</h3>
+					<p>Maurizio Lupo</p>
+          <p>@sithmel</p>
           <aside class="notes">
             Good evening and thanks for having me. In this session I am going to talk about microservices, in particular what issues we found integrating microservices in the frontend.
           </aside>
         </section>
-        <section data-transition="fade">
+        <section data-background="assets/coffee.jpg" style="text-align: left;">
           <h2>About myself</h2>
           <img width="350" class="photo-1" src="assets/me2.jpg" />
-					<p>Software engineer for TES Global</p>
           <aside class="notes">
             But first thing first, allow to introduce myself. My name is Maurizio Lupo, I am a software engineer for tes global.
           </aside>
         </section>
-        <section>
+        <section data-background="assets/school.jpg" class="panel panel-1">
           <img src="assets/logo.svg" />
-          <blockquote>Tes Global is a digital education company that has been supporting educators for over 100 years. Tes is a community dedicated to supporting, inspiring and connecting educators everywhere; while Times Higher Education provides data and insights that drive excellence in the world’s leading universities</blockquote>
           <aside class="notes">
-          </aside>
+Tes Global is a digital education company that has been supporting educators for over 100 years. Tes is a community dedicated to supporting, inspiring and connecting educators everywhere; while Times Higher Education provides data and insights that drive excellence in the world’s leading universities          </aside>
         </section>
-        <section class="panel" data-background="assets/engineering.jpg">
-          <h2>Our team</h2>
+        <section data-background="assets/engineering.jpg">
+          <h6 class="panel">Our team</h6>
           <aside class="notes">
 
           </aside>
@@ -59,32 +58,32 @@ tart<!doctype html>
             In the last 2 years we underwent a big change, from this monolith to a battery of node.js microservices. Up to this point this is a classic happy ending story, you probably heard many times. I could show you how we improved the speed of the release cycle, but the real focus of this topic is how we dealt with the frontend.
           </aside>
         </section>
-        <section data-transition="fade">
+        <section>
           <h2>Frontend integration</h2>
           <img src="assets/ms0.svg" />
           <aside class="notes">
             We took the architecture decision of exposing the frontend of a series of microservices in the browser.
           </aside>
         </section>
-        <section data-transition="fade">
+        <section>
           <h2>Frontend integration</h2>
           <img src="assets/ms1.svg" />
           <aside class="notes">
             We are able to do this thanks to compoxure.
           </aside>
         </section>
-				<section data-transition="fade">
+				<section>
           <h2>Frontend integration</h2>
           <img src="assets/ms4.svg" />
           <aside class="notes">
             We are able to do this thanks to compoxure.
           </aside>
         </section>
-				<section data-background="assets/puzzle.jpg" class="panel">
+				<section data-background="assets/puzzle.jpg" class="panel panel-2">
           <h2>Compoxure</h2>
 					<p>A proxy server for page composition</p>
 				</section>
-        <section data-background="white" data-transition="fade">
+        <section data-background="white">
           <h2>Compoxure</h2>
           <img src="assets/cx2.svg"></img>
           <aside class="notes">
@@ -92,14 +91,14 @@ tart<!doctype html>
             It works this way: a request is routed to a microservice passing through compoxure
           </aside>
         </section>
-        <section data-background="white" data-transition="fade">
+        <section data-background="white">
           <h2>Compoxure</h2>
           <img src="assets/cx4.svg"></img>
           <aside class="notes">
             the microservice returns a page, where the secondary content is missing. And instead is marked by special tags.
           </aside>
         </section>
-        <section data-background="white" data-transition="fade">
+        <section data-background="white">
           <h2>Compoxure</h2>
           <img src="assets/cx6.svg"></img>
           <aside class="notes">
@@ -108,7 +107,7 @@ tart<!doctype html>
           </aside>
         </section>
 
-				<section data-transition="fade">
+				<section>
           <h4>Compoxure</h4>
 					<pre><code data-trim data-noescape>
 &lt;div cx-url="{{server:local}}/application/"&gt;
@@ -122,7 +121,7 @@ tart<!doctype html>
           </aside>
         </section>
 
-        <section data-transition="fade" data-background="assets/accident.jpg" class="panel">
+        <section data-background="assets/accident.jpg" class="panel panel-5">
           <h2>Compoxure</h2>
           <h4>performance and fallback</h4>
           <aside class="notes">
@@ -131,7 +130,7 @@ tart<!doctype html>
         </section>
 
 
-        <section data-background="white" data-transition="fade">
+        <section data-background="white">
           <h4>Compoxure</h4>
           <img src="assets/cxredis-1-cache.svg"></img>
 					<p>Page or fragment not cached</p>
@@ -139,7 +138,7 @@ tart<!doctype html>
           </aside>
         </section>
 
-        <section data-background="white" data-transition="fade">
+        <section data-background="white">
           <h4>Compoxure</h4>
           <img src="assets/cxredis-2-cache.svg"></img>
 					<p>Page or fragment cached</p>
@@ -147,7 +146,7 @@ tart<!doctype html>
           </aside>
         </section>
 
-        <section data-background="white" data-transition="fade">
+        <section data-background="white">
           <h4>Compoxure</h4>
           <img src="assets/cxredis-3-cache.svg"></img>
 					<p>Stale cache: ask for fresh page/fragment</p>
@@ -155,7 +154,7 @@ tart<!doctype html>
           </aside>
         </section>
 
-        <section data-background="white" data-transition="fade">
+        <section data-background="white">
           <h4>Compoxure</h4>
           <img src="assets/cxredis-4-fallback.svg"></img>
 					<p>Errors on backend service: return cache (even if stale)</p>
@@ -163,7 +162,7 @@ tart<!doctype html>
           </aside>
         </section>
 
-        <section data-transition="fade">
+        <section>
           <h4>Compoxure debugger</h4>
           <img src="assets/timings.png" style="max-width: 300px;"></img>
           <aside class="notes">
@@ -261,9 +260,9 @@ tart<!doctype html>
           <aside class="notes">
           </aside>
         </section>
-        <section>
-          <h2>async-define</h2>
-					<p>wraps your scripts and ensure the execution order without polluting the global namespace</p>
+        <section data-background="assets/cupcake.jpg" class="panel panel-3">
+          <h4>async-define</h4>
+					<p>ensure the execution order without polluting the global namespace</p>
           <aside class="notes">
 						AsyncDefine is not a module definition system, it doesn't trigger the download of the dependencies, it doesn't require, include or enforce any kind of package manager.
 
@@ -288,18 +287,18 @@ tart<!doctype html>
           <aside class="notes">
           </aside>
         </section>
-				<section>
-          <h2>Async-define with webpack</h2>
+				<section data-background="assets/presents.jpg" class="panel panel-4">
+          <h4>An example with webpack</h4>
 				</section>
 
         <section>
-          <h4>Service1 webpack.config.js</h4>
+          <h4>Service webpack.config.js</h4>
           <pre><code data-trim data-noescape>
             const WPAsyncDefine = require('webpack-async-define');
             module.exports = {
               entry: './app.js',
               externals: {
-                react: 'react-16',
+                react: 'react-16', // this is the dependency label
               },
               plugins: [
                 new WPAsyncDefine()
@@ -314,7 +313,7 @@ tart<!doctype html>
         </section>
 
 				<section>
-          <h4>react webpack.config.js</h4>
+          <h4>react bundle webpack.config.js</h4>
           <pre><code data-trim data-noescape>
             const WPAsyncDefine = require('webpack-async-define');
             module.exports = {
@@ -324,7 +323,7 @@ tart<!doctype html>
               ],
               output: {
                 filename: 'react_ad.js',
-                library: 'react-16',
+                library: 'react-16', // library exposed with this label
               }
             };
           </code></pre>
@@ -333,7 +332,7 @@ tart<!doctype html>
         </section>
 
 				<section>
-          <h4>react async-define bundle</h4>
+          <h4>react source</h4>
           <pre><code data-trim data-noescape>
 						const react = require('react');
 						module.exports = react;
@@ -391,6 +390,7 @@ tart<!doctype html>
 
 				<section>
 					<h4>Microservices communication</h4>
+					<h5>Using global namespace</h5>
 					<p>mservice1:</p>
 					<pre><code data-trim data-noescape>
 						...
@@ -443,7 +443,7 @@ tart<!doctype html>
           <aside class="notes">
           </aside>
         </section>
-				<section>
+				<section data-background="assets/bus.jpeg" class="panel">
 					<h4>Using an event bus</h4>
 				</section>
 				<section>
@@ -478,20 +478,20 @@ tart<!doctype html>
 						});
           </code></pre>
 				</section>
-        <section>
-          <h4>occamsrazor</h4>
+        <section data-background="assets/gears.jpeg" class="panel">
+          <h4>Other use cases</h4>
 					<ul>
-            <li class="fragment">lightweight</li>
-						<li class="fragment">tons of features</li>
-						<li class="fragment">broadcast across windows/iframes/tabs</li>
-						<li class="fragment">can bridge history API (pushstate, popstate)</li>
+						<li class="fragment">permanent events</li>
+            <li class="fragment">broadcast messages across tabs</li>
+						<li class="fragment">client side routing across microservices</li>
           </ul>
           <aside class="notes">
           </aside>
         </section>
-        <section>
+        <section data-background="assets/map.jpg" class="panel">
           <h2>Links</h2>
 					<ul>
+						<li><a href="https://sithmel.github.io/microservices-frontend-presentation/">This presentation</a></li>
 						<li><a href="https://github.com/tes/compoxure">compoxure</a></li>
 						<li><a href="https://github.com/tes/async-define">async-define</a></li>
 						<li><a href="https://github.com/tes/webpack-async-define">async-define webpack plugin</a></li>
@@ -499,11 +499,14 @@ tart<!doctype html>
 						<li><a href="https://github.com/tes/browserify-async-define">async-define browserify plugin</a></li>
 						<li><a href="https://github.com/sithmel/occamsrazor.js">occamsrazor</a></li>
 						<li><a href="https://github.com/sithmel/occamsrazor-broadcast-browser">occamsrazor broadcast plugin</a></li>
+						<li><a href="https://github.com/sithmel/occamsrazor-history-browser">occamsrazor history plugin</a></li>
+						<li><a href="https://github.com/sithmel/occamsrazor-click-browser">occamsrazor html5 api</a></li>
 					</ul>
           <aside class="notes">
           </aside>
         </section>
 				<section data-background="assets/thanks.jpg">
+					<p style="text-align: left">@sithmel</p>
           <aside class="notes">
           </aside>
         </section>
@@ -518,6 +521,7 @@ tart<!doctype html>
       // - https://github.com/hakimel/reveal.js#configuration
       // - https://github.com/hakimel/reveal.js#dependencies
       Reveal.initialize({
+				transition: 'fade',
         dependencies: [
           { src: 'plugin/markdown/marked.js' },
           { src: 'plugin/markdown/markdown.js' },

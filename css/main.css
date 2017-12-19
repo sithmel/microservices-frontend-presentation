@@ -41,6 +41,7 @@
   animation-iteration-count: infinite;
   animation-timing-function: ease;
   transform-origin: center top;
+  border-radius: 10px 10px 0 10px;
 }
 
 blockquote {
@@ -96,8 +97,34 @@ blockquote {
 
 .panel{
   background-color: rgba(0,0,0,0.7);
-  border-radius: 40px 40px 0px 0px;
+  border-radius: 40px 40px 0px 40px;
 }
 .notebook > * {
   transform: rotate(-1deg);
+}
+
+.panel-1 {
+  background-color: rgba(0, 90, 112, 0.89);
+}
+.panel-2 {
+  background-color: rgb(119, 179, 212);
+}
+.panel-3 {
+  background-color: rgba(117, 59, 189, 0.61);
+}
+.panel-4 {
+  background-color: rgba(239, 66, 111, 0.88);
+}
+
+.panel-5 {
+  background-color: rgba(253, 112, 55, 0.78);
+}
+
+.reveal blockquote {
+  background-color: transparent;
+}
+
+h6.panel {
+  display: inline-block;
+  padding: 15px;
 }
