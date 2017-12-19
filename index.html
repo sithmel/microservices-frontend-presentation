@@ -419,6 +419,7 @@ In this example an fragment is not in the cache and is requested from the main s
 
 				<section data-background="assets/paper.jpg" data-background-color="white" class="notebook">
 					<h4>Microservices communication</h4>
+					<h5>Using global namespace</h5>
 					<ul class="tickboxes">
             <li class="fragment crossed"> Namespace conflicts</li>
 						<li class="fragment crossed"> Keep services independent</li>
@@ -443,7 +444,10 @@ In this example an fragment is not in the cache and is requested from the main s
 					</ul>
 				</section>
 
-        <section>
+				<section data-background="assets/bus.jpeg" class="panel">
+					<h4>Using an event bus</h4>
+				</section>
+				<section>
 					<h4>Expose the bus in the global namespace</h4>
 					<pre><code data-trim data-noescape>
 						const or = require('occamsrazor');
@@ -452,9 +456,6 @@ In this example an fragment is not in the cache and is requested from the main s
           <aside class="notes">
           </aside>
         </section>
-				<section data-background="assets/bus.jpeg" class="panel">
-					<h4>Using an event bus</h4>
-				</section>
 				<section>
 					<h4>app-job-ad</h4>
 					<img width="500" src="assets/login/1.png" />
@@ -483,7 +484,7 @@ In this example an fragment is not in the cache and is requested from the main s
 					<img width="500" src="assets/login/4.png" />
 					<pre><code data-trim data-noescape>
 						window.eventBus.on('logged-in', (event, username) => {
-              ... redirect to "apply" page ...
+              ... open to "apply" modal ...
 						});
           </code></pre>
 				</section>
