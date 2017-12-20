@@ -60,28 +60,28 @@ This is our team.
         </section>
         <section>
           <h2>Frontend integration</h2>
-          <img src="assets/ms0.svg" />
+          <img src="assets/svgs/ms0.svg" />
           <aside class="notes">
             We took the architecture decision of exposing the frontend of a series of microservices in the browser.
           </aside>
         </section>
         <section>
           <h2>Frontend integration</h2>
-          <img src="assets/ms1.svg" />
+          <img src="assets/svgs/ms1.svg" />
           <aside class="notes">
             We are able to do this thanks to compoxure.
           </aside>
         </section>
 				<section>
           <h2>Frontend integration</h2>
-          <img src="assets/ms4.svg" />
+          <img src="assets/svgs/ms4.svg" />
           <aside class="notes">
             We are able to do this thanks to compoxure.
           </aside>
         </section>
-				<section data-background="assets/puzzle.jpg" class="panel panel-2">
-          <h2>Compoxure</h2>
-					<p>A proxy server for page composition</p>
+				<section data-background="assets/puzzle.jpg">
+          <h2 class="panel panel-2" style="margin-bottom: 40%;">Compoxure</h2>
+					<p class="panel panel-2">A reverse proxy for page composition</p>
 					<aside class="notes">
 						We are able to do this thanks to compoxure.
 						Compoxure is an http proxy that provides the integration of many microservices merging all fragments coming from them in a single html page.
@@ -89,21 +89,21 @@ This is our team.
 				</section>
         <section data-background="white">
           <h2>Compoxure</h2>
-          <img src="assets/cx2.svg"></img>
+          <img src="assets/svgs/cx2.svg"></img>
           <aside class="notes">
 						It works this way: a request is routed to a microservice passing through compoxure
           </aside>
         </section>
         <section data-background="white">
           <h2>Compoxure</h2>
-          <img src="assets/cx4.svg"></img>
+          <img src="assets/svgs/cx4.svg"></img>
           <aside class="notes">
 						the microservice returns a page, where the secondary content is missing. And instead is marked by special tags.
           </aside>
         </section>
         <section data-background="white">
           <h2>Compoxure</h2>
-          <img src="assets/cx6.svg"></img>
+          <img src="assets/svgs/cx6.svg"></img>
           <aside class="notes">
             These cx tags instruct compoxure to get fragments from different microservices
             The page is composed and delivered to the browser
@@ -136,7 +136,7 @@ This is our team.
 
         <section data-background="white">
           <h4>Compoxure</h4>
-          <img src="assets/cxredis-1-cache.svg"></img>
+          <img src="assets/svgs/cxredis-1-cache.svg"></img>
 					<p>Page or fragment not cached</p>
           <aside class="notes">
 In this example an fragment is not in the cache and is requested from the main service
@@ -145,7 +145,7 @@ In this example an fragment is not in the cache and is requested from the main s
 
         <section data-background="white">
           <h4>Compoxure</h4>
-          <img src="assets/cxredis-2-cache.svg"></img>
+          <img src="assets/svgs/cxredis-2-cache.svg"></img>
 					<p>Page or fragment cached</p>
           <aside class="notes">
 						If the fragment is cached is returned without calling the service
@@ -154,7 +154,7 @@ In this example an fragment is not in the cache and is requested from the main s
 
         <section data-background="white">
           <h4>Compoxure</h4>
-          <img src="assets/cxredis-3-cache.svg"></img>
+          <img src="assets/svgs/cxredis-3-cache.svg"></img>
 					<p>Stale cache: ask for fresh page/fragment</p>
           <aside class="notes">
 						If the fragment is in the cache but is a bit old we might ask the original service from a fresh copy
@@ -163,7 +163,7 @@ In this example an fragment is not in the cache and is requested from the main s
 
         <section data-background="white">
           <h4>Compoxure</h4>
-          <img src="assets/cxredis-4-fallback.svg"></img>
+          <img src="assets/svgs/cxredis-4-fallback.svg"></img>
 					<p>Errors on backend service: return cache (even if stale)</p>
           <aside class="notes">
 						But if the service returns an error or times out we can still use the stale copy as a fallback
@@ -226,7 +226,7 @@ In this example an fragment is not in the cache and is requested from the main s
 
         <section>
           <h4>Duplicated libraries</h4>
-          <img src="assets/ms3.svg" />
+          <img src="assets/svgs/ms3.svg" />
           <aside class="notes">
             There is an issue though. I can have many different microservices in a single page, isn't it a shame loading the same library, react for example, multiple times?
           </aside>
@@ -430,7 +430,7 @@ In this example an fragment is not in the cache and is requested from the main s
 
         <section data-background="white">
           <h4>Solution: use an event bus</h4>
-          <img src="assets/event-bus.svg" />
+          <img src="assets/svgs/event-bus.svg" />
           <aside class="notes">
 						The easiest way is to introduce a pub/sub library in global namespace of your page.
           </aside>
@@ -459,36 +459,36 @@ In this example an fragment is not in the cache and is requested from the main s
 				<section>
 					<h4>app-job-ad</h4>
 					<img width="500" src="assets/login/1.png" />
-					<pre><code data-trim data-noescape>
-						window.eventBus.trigger('open-login');
+					<pre><code data-noescape>
+window.eventBus.trigger('open-login');
           </code></pre>
 				</section>
 				<section>
 					<h4>app-authentication</h4>
 					<img width="500" src="assets/login/2.png" />
 					<pre><code data-trim data-noescape>
-						window.eventBus.on('open-login', (event) => {
+            window.eventBus.on('open-login', (event) => {
               ... open the login modal ...
-						});
+            });
           </code></pre>
 				</section>
 				<section>
 					<h4>app-authentication</h4>
 					<img width="500" src="assets/login/3.png" />
-					<pre><code data-trim data-noescape>
-						window.eventBus.trigger('logged-in', 'sithmel3');
+					<pre><code data-noescape>
+window.eventBus.trigger('logged-in', 'sithmel3');
           </code></pre>
 				</section>
 				<section>
 					<h4>app-job-ad</h4>
 					<img width="500" src="assets/login/4.png" />
 					<pre><code data-trim data-noescape>
-						window.eventBus.on('logged-in', (event, username) => {
+            window.eventBus.on('logged-in', (event, username) => {
               ... open to "apply" modal ...
-						});
+            });
           </code></pre>
 				</section>
-        <section data-background="assets/gears.jpeg" class="panel">
+        <section data-background="assets/ideas.jpg" class="panel">
           <h4>Other use cases</h4>
 					<ul>
 						<li class="fragment">permanent events</li>
