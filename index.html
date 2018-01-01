@@ -37,54 +37,58 @@
           <h2>About myself</h2>
           <img width="350" class="photo-1" src="assets/me2.jpg" />
           <aside class="notes">
-            But first thing first, allow to introduce myself. My name is Maurizio Lupo, I am a software engineer for tes global.
+            But first thing first, allow to introduce myself.
+            As you might guess from the picture (an my accent) I am Italian, my name is Maurizio Lupo, I am a software engineer for tes global.
           </aside>
         </section>
         <section data-background="assets/school.jpg" class="panel panel-1">
           <img src="assets/logo.svg" />
           <aside class="notes">
-Tes Global is a digital education company that has been supporting educators for over 100 years. Tes is a community dedicated to supporting, inspiring and connecting educators everywhere; while Times Higher Education provides data and insights that drive excellence in the world’s leading universities          </aside>
+            Tes Global is a digital education company with the goal supporting teachers all around the world. We do that in many ways, maintaining a platform for job advertising, hosting a teaching resource marketplace where teachers can share material and publishing news and the world univerity ranking and many other things!
+          </aside>
         </section>
         <section data-background="assets/engineering.jpg">
           <h6 class="panel">Our team</h6>
           <aside class="notes">
-This is our team.
+            This is our team.
+            I am really lucky to work with such an amazing group of people.
           </aside>
         </section>
         <section data-background="assets/hearts.jpg">
           <h2>We <span class="heart">💖</span> microservices</h2>
           <aside class="notes">
             We are an estabilished digital business, and as many others we found ourselves with a huge (.net) monolith. A monolith that was slowing us down, in a critical moment where our market was changing rapidly.
-            In the last 2 years we underwent a big change, from this monolith to a battery of node.js microservices. Up to this point this is a classic happy ending story, you probably heard many times. I could show you how we improved the speed of the release cycle, but the real focus of this topic is how we dealt with the frontend.
+            In the last 3 years we underwent a big change, from this monolith to a battery of node.js microservices. Up to this point this is a classic happy ending story, you probably heard many times. I could show you how we improved the speed of the release cycle, but the real focus of this topic is how we dealt with the frontend.
           </aside>
         </section>
         <section>
           <h2>Frontend integration</h2>
           <img src="assets/svgs/ms0.svg" />
           <aside class="notes">
-            We took the architecture decision of exposing the frontend of a series of microservices in the browser.
+            This is a page of tes website
           </aside>
         </section>
         <section>
           <h2>Frontend integration</h2>
           <img src="assets/svgs/ms1.svg" />
           <aside class="notes">
-            We are able to do this thanks to compoxure.
+            We took the architecture decision of composing a page out of many fragments coming from different microservices
           </aside>
         </section>
 				<section>
           <h2>Frontend integration</h2>
           <img src="assets/svgs/ms4.svg" />
           <aside class="notes">
-            We are able to do this thanks to compoxure.
+            Every microservice outputs a fragment and these are merged in a single html page
+            * Just out of curiosity ... how many of you are doing the same? can you raise your hands ?
           </aside>
         </section>
 				<section data-background="assets/puzzle.jpg">
           <h2 class="panel panel-2" style="margin-bottom: 40%;">Compoxure</h2>
 					<p class="panel panel-2">A reverse proxy for page composition</p>
 					<aside class="notes">
-						We are able to do this thanks to compoxure.
-						Compoxure is an http proxy that provides the integration of many microservices merging all fragments coming from them in a single html page.
+            We are able to do this thanks to compoxure.
+            Compoxure is an in-house open source reverse proxy that takes care of page composition. Adding many feature to make this easy and convenient.
           </aside>
 				</section>
         <section data-background="white">
@@ -105,7 +109,7 @@ This is our team.
           <h2>Compoxure</h2>
           <img src="assets/svgs/cx6.svg"></img>
           <aside class="notes">
-            These cx tags instruct compoxure to get fragments from different microservices
+            These tags instruct compoxure to get fragments from different microservices
             The page is composed and delivered to the browser
           </aside>
         </section>
@@ -139,7 +143,7 @@ This is our team.
           <img src="assets/svgs/cxredis-1-cache.svg"></img>
 					<p>Page or fragment not cached</p>
           <aside class="notes">
-In this example an fragment is not in the cache and is requested from the main service
+In this example a fragment is not in the cache and is requested from the main service
           </aside>
         </section>
 
@@ -157,7 +161,7 @@ In this example an fragment is not in the cache and is requested from the main s
           <img src="assets/svgs/cxredis-3-cache.svg"></img>
 					<p>Stale cache: ask for fresh page/fragment</p>
           <aside class="notes">
-						If the fragment is in the cache but is a bit old we might ask the original service from a fresh copy
+						If the fragment is in the cache but is a bit old we ask the original service from a fresh copy
           </aside>
         </section>
 
@@ -189,15 +193,24 @@ In this example an fragment is not in the cache and is requested from the main s
           <aside class="notes">
             So here it is, services are well isolated each other. And compoxure is taking care of both performance (with caching) and reliability (fallback). If only there was no client side javascript!
             Yes, because the issue as soon as the content reaches the browser is having more than one application coexisting and also cooperate with the others.
+
+            What are our goals:
 						Before explaining all solutions I would like to explain some design principle I used to tell if a solution was good or not
-            We can't propose a solution that harm the performance or the SEO. Mobile performance are vital for a global businness. We need to value our user's time!
+
+            We need to avoid namespace conflicts.
+            We can't propose a solution that harm the performance or SEO. Mobile performance are vital for a global businness. We need to value our user's time!
             Indipendence is very important for microservices. It allows:
             * develop easily locally
             * deploy independently
             * reuse different services in different environments/pages
+
+            We need to allow microservices in the browser to communicate each other
           </aside>
         </section>
 				<section data-background="assets/jenga.jpg">
+          <aside class="notes">
+            To tick all these boxes we found ourselves playing a game of jenga where ticking one box in the obvious way meant compromise another goal.
+          </aside>
 				</section>
         <section>
           <h4>Bundle client side js</h4>
@@ -211,8 +224,23 @@ In this example an fragment is not in the cache and is requested from the main s
             &lt;script async src="mservice2.js"&gt;&lt;/script&gt;
           </code></pre>
           <aside class="notes">
-            Here is the first issue. How to manage client side javascript?
-            If you, like many bundle your scripts using browserify or webpack you are already one step ahead! Bundling allow to not pollute the global namespace and to keep the frontend applications decoupled.
+            If you, like many, bundle your scripts using browserify or webpack you are already one step ahead! Bundling allow to not pollute the global namespace and to keep the frontend applications decoupled.
+          </aside>
+        </section>
+        <section>
+          <h4>Bundle client side js</h4>
+					<img width="100" src="assets/browserify.svg" />
+					<img width="100" src="assets/webpack.svg" />
+					<img width="100" src="assets/rollup.svg" />
+          <pre><code data-trim data-noescape>
+            ...
+            &lt;script <mark>async</mark> src="mservice1.js"&gt;&lt;/script&gt;
+            ...
+            &lt;script <mark>async</mark> src="mservice2.js"&gt;&lt;/script&gt;
+          </code></pre>
+          <aside class="notes">
+            Another advantage is that when scripts tags are independent, they can be loaded using the "async" attribute.
+            We will see later that this is very important because it allows a page to be rendered without being blocked by the scripts.
           </aside>
         </section>
 				<section data-background="assets/paper.jpg" data-background-color="white" class="notebook">
@@ -235,16 +263,14 @@ In this example an fragment is not in the cache and is requested from the main s
         <section>
           <h4>Libraries in global namespace</h4>
           <pre><code data-trim data-noescape>
-            &lt;script src="react.js"&gt;&lt;/script&gt;
+            &lt;script src="react.js"&gt;&lt;/script&gt; &lt;!-- no async! --&gt;
             ...
             &lt;script async src="mservice1.js"&gt;&lt;/script&gt;
             ...
             &lt;script async src="mservice2.js"&gt;&lt;/script&gt;
           </code></pre>
           <aside class="notes">
-            We could put global libraries in the global namespace. But this conflicts with both our principles:
-            * performance wise, forces us to load all common libraries synchronously
-            * different version of the same library conflicts each other in the global namespace
+            One deceptively simple solution is to factor out the common dependencies.
           </aside>
         </section>
 				<section data-background="assets/paper.jpg" data-background-color="white" class="notebook">
@@ -255,29 +281,42 @@ In this example an fragment is not in the cache and is requested from the main s
 						<li class="fragment crossed"> Frontend Performance</li>
           </ul>
           <p class="fragment">Synchronous js problem!</p>
+          <aside class="notes">
+            But this conflicts with both our principles:
+            * performance wise, forces us to load all common libraries synchronously
+            * different version of the same library conflicts each other in the global namespace
+
+            If you are new to front end performance that might look not so important.
+            It is very important!
+            I am going to show what happen when we make some javascript asynchronous
+          </aside>
 				</section>
 
         <section>
           <h4>Synchronous js on mobile network</h4>
           <img src="assets/perf2.png" />
           <aside class="notes">
+            This page takes 8.4 secs to show something useful (from an average 3g connection).
+            The bars with the stripes are blocking resources:
+            * synchronous js
+            * css
           </aside>
         </section>
         <section>
           <h4>Synchronous js on mobile network</h4>
           <img src="assets/perf1.png" />
           <aside class="notes">
+            This page takes only 3.4 secs (from an average 3g connection).
+            The difference is that we managed to minimise the blocking resources
           </aside>
         </section>
         <section data-background="assets/cupcake.jpg" class="panel panel-3">
           <h4>async-define</h4>
 					<p>ensure the execution order without polluting the global namespace</p>
           <aside class="notes">
-						AsyncDefine is not a module definition system, it doesn't trigger the download of the dependencies, it doesn't require, include or enforce any kind of package manager.
-
-            async-define is a AMD runner, someone of you probably used requirejs. Requirejs used AMD as a system to define a module,
-            If you have used requirejs you know that bundling many amd modules together, in the right order is necessary. Every time a new dependency is required requirejs triggers a download. This may lead to a waterfall of downloads.
-            Async-define avoided completely this issue. async-define uses AMD to synchronise the execution of multiple scripts. You, as a web author have to put all required script tags in the page. Async-define manages only the execution order.
+            async-define is a function that coordinate the execution of multiple script.
+            It also wraps the script in a way that it doesn't pollute the global namespace.
+            Its api resembles AMD, this allows to easily integrate it with common module bundler.
           </aside>
         </section>
 
@@ -294,6 +333,7 @@ In this example an fragment is not in the cache and is requested from the main s
             <li>rollup</li>
           </ul>
           <aside class="notes">
+            Instead of using async-define directly, we use a plugin.
           </aside>
         </section>
 				<section data-background="assets/presents.jpg" class="panel panel-4">
@@ -307,7 +347,7 @@ In this example an fragment is not in the cache and is requested from the main s
             module.exports = {
               entry: './app.js',
               externals: {
-                react: 'react-16', // this is the dependency label
+                react: 'react-15', // this is the dependency label
               },
               plugins: [
                 new WPAsyncDefine()
@@ -318,6 +358,8 @@ In this example an fragment is not in the cache and is requested from the main s
             };
           </code></pre>
           <aside class="notes">
+            This is the webpack configuration of our mservice1.
+            It depends on react. We configure the bundle for not containing react, and instead relying on a dependency labeled as "react-15"
           </aside>
         </section>
 
@@ -331,12 +373,13 @@ In this example an fragment is not in the cache and is requested from the main s
                 new WPAsyncDefine()
               ],
               output: {
-                filename: 'react_ad.js',
-                library: 'react-16', // library exposed with this label
+                filename: 'react-15_ad.js',
+                library: 'react-15', // library exposed with this label
               }
             };
           </code></pre>
           <aside class="notes">
+            This is the configuration needed to create the dependency labeled as "react-15".
           </aside>
         </section>
 
@@ -347,13 +390,40 @@ In this example an fragment is not in the cache and is requested from the main s
 						module.exports = react;
           </code></pre>
           <aside class="notes">
+            The dependency simply exposes the library we want
           </aside>
         </section>
 
 				<section>
           <h4>Importing the bundles</h4>
           <pre><code data-trim data-noescape>
-            &lt;script async src="react_ad.js"&gt;&lt;/script&gt;
+            &lt;script async src="react-15_ad.js"&gt;&lt;/script&gt;
+            ...
+            &lt;script async src="mservice1_ad.js"&gt;&lt;/script&gt;
+            ...
+            &lt;script async src="mservice2_ad.js"&gt;&lt;/script&gt;
+          </code></pre>
+          <aside class="notes">
+            In this way we can load the bundles and the dependencies asynchronously
+          </aside>
+        </section>
+
+        <section data-background="assets/paper.jpg" data-background-color="white" class="notebook">
+          <h4>Using async-define:</h4>
+					<ul class="tickboxes">
+            <li class="fragment ticked"> Namespace conflicts</li>
+						<li class="fragment ticked"> Frontend Performance</li>
+            <li class="fragment crossed"> Keep services independent</li>
+          </ul>
+          <aside class="notes">
+            The issue here is: what microservices should contain the common dependency?
+          </aside>
+        </section>
+
+        <section>
+          <h4>What service loads the dependencies?</h4>
+          <pre><code data-trim data-noescape>
+            &lt;script async src="react-15_ad.js"&gt;&lt;/script&gt; &lt;!-- ??? --&gt;
             ...
             &lt;script async src="mservice1_ad.js"&gt;&lt;/script&gt;
             ...
@@ -367,10 +437,10 @@ In this example an fragment is not in the cache and is requested from the main s
           <h5>Keeping independence with duplications</h5>
           <pre><code data-trim data-noescape>
             ...
-            &lt;script async src="react_ad.js"&gt;&lt;/script&gt;
+            &lt;script async src="react-15_ad.js"&gt;&lt;/script&gt;
             &lt;script async src="mservice1_ad.js"&gt;&lt;/script&gt;
             ...
-            &lt;script async src="react_ad.js"&gt;&lt;/script&gt;
+            &lt;script async src="react-15_ad.js"&gt;&lt;/script&gt;
             &lt;script async src="mservice2_ad.js"&gt;&lt;/script&gt;
           </code></pre>
 					<ul>
@@ -386,45 +456,77 @@ In this example an fragment is not in the cache and is requested from the main s
           </aside>
         </section>
 
+        <section>
+          <h5>Update to different versions (1)</h5>
+          <pre><code data-trim data-noescape>
+            ...
+            &lt;script async src="react-<mark>15</mark>_ad.js"&gt;&lt;/script&gt;
+            &lt;script async src="mservice1_ad.js"&gt;&lt;/script&gt;
+            ...
+            &lt;script async src="react-<mark>16</mark>_ad.js"&gt;&lt;/script&gt;
+            &lt;script async src="mservice2_ad.js"&gt;&lt;/script&gt;
+          </code></pre>
+          <aside class="notes">
+          </aside>
+        </section>
+
+        <section>
+          <h5>Update to different versions (2)</h5>
+          <pre><code data-trim data-noescape>
+            ...
+            &lt;script async src="react-<mark>16</mark>_ad.js"&gt;&lt;/script&gt;
+            &lt;script async src="mservice1_ad.js"&gt;&lt;/script&gt;
+            ...
+            &lt;script async src="react-<mark>16</mark>_ad.js"&gt;&lt;/script&gt;
+            &lt;script async src="mservice2_ad.js"&gt;&lt;/script&gt;
+          </code></pre>
+          <aside class="notes">
+          </aside>
+        </section>
+
 				<section data-background="assets/paper.jpg" data-background-color="white" class="notebook">
-          <h4>Using async-define:</h4>
+          <h4>Using async-define (with duplication):</h4>
 					<ul class="tickboxes">
             <li class="fragment ticked"> Namespace conflicts</li>
+            <li class="fragment ticked"> Frontend Performance</li>
 						<li class="fragment ticked"> Keep services independent</li>
-						<li class="fragment ticked"> Frontend Performance</li>
           </ul>
           <aside class="notes">
+            This solved ticked all boxes for us
           </aside>
         </section>
 
 				<section>
 					<h4>Microservices communication</h4>
-					<h5>Using global namespace</h5>
-					<p>mservice1:</p>
-					<pre><code data-trim data-noescape>
-						...
-						window.mservice1ExternalAPI = mservice1ExternalAPI;
-          </code></pre>
-					<p>mservice2:</p>
-					<pre><code data-trim data-noescape>
-						...
-						window.mservice1ExternalAPI.do();
-						...
-          </code></pre>
+          <div class="fragment">
+            <h5>Using the global namespace</h5>
+            <p>mservice1:</p>
+            <pre><code data-trim data-noescape>
+              ...
+              window.mservice1ExternalAPI = mservice1ExternalAPI;
+            </code></pre>
+            <p>mservice2:</p>
+            <pre><code data-trim data-noescape>
+              ...
+              window.mservice1ExternalAPI.do();
+              ...
+            </code></pre>
+          </div>
           <aside class="notes">
 						Last but not least, how can different applications can communicate each others?
-						The main point here is that every application should be able to run independently, and not be tightly coupled to others. The easiest way is to introduce a pub/sub library in global namespace of your page.
+						The main point here is that every application should be able to run independently, and not be tightly coupled to others.
           </aside>
         </section>
 
 				<section data-background="assets/paper.jpg" data-background-color="white" class="notebook">
 					<h4>Microservices communication</h4>
-					<h5>Using global namespace</h5>
+					<h5>Using the global namespace</h5>
 					<ul class="tickboxes">
             <li class="fragment crossed"> Namespace conflicts</li>
 						<li class="fragment crossed"> Keep services independent</li>
           </ul>
           <aside class="notes">
+            Using the global namespace is problematic because we are back at polluting the namespace
           </aside>
         </section>
 
@@ -432,7 +534,7 @@ In this example an fragment is not in the cache and is requested from the main s
           <h4>Solution: use an event bus</h4>
           <img src="assets/svgs/event-bus.svg" />
           <aside class="notes">
-						The easiest way is to introduce a pub/sub library in global namespace of your page.
+						The easiest way is to introduce a pub/sub library in the global namespace of your page.
           </aside>
         </section>
 				<section data-background="assets/paper.jpg" data-background-color="white" class="notebook">
@@ -446,6 +548,9 @@ In this example an fragment is not in the cache and is requested from the main s
 
 				<section data-background="assets/bus.jpeg" class="panel">
 					<h4>Using an event bus</h4>
+          <aside class="notes">
+						I am going to show you an example of how 2 different frontend microservices can interact each other
+          </aside>
 				</section>
 				<section>
 					<h4>Expose the bus in the global namespace</h4>
@@ -454,6 +559,7 @@ In this example an fragment is not in the cache and is requested from the main s
 						window.eventBus = or();
           </code></pre>
           <aside class="notes">
+            We are using occamsrazor as event bus. Mainly because it has a cool name and I am the author.
           </aside>
         </section>
 				<section>
@@ -462,6 +568,11 @@ In this example an fragment is not in the cache and is requested from the main s
 					<pre><code data-noescape>
 window.eventBus.trigger('open-login');
           </code></pre>
+          <aside class="notes">
+            The scenario is the following: we have 2 different microservices, app-job-ad and app-authentication.
+            The first is taking care of this job advertising and the second of all services realted to user authentication.
+            The user wants to apply for a job but is not logged in. app-job-ad triggers an event asking a different service to provide a way to authentication the user.
+          </aside>
 				</section>
 				<section>
 					<h4>app-authentication</h4>
@@ -471,6 +582,9 @@ window.eventBus.trigger('open-login');
               ... open the login modal ...
             });
           </code></pre>
+          <aside class="notes">
+            app-authentication is listening for this event and reacts opening the login/registration modal
+          </aside>
 				</section>
 				<section>
 					<h4>app-authentication</h4>
@@ -478,6 +592,9 @@ window.eventBus.trigger('open-login');
 					<pre><code data-noescape>
 window.eventBus.trigger('logged-in', 'sithmel3');
           </code></pre>
+          <aside class="notes">
+            on a succesful log-in, an event is triggered
+          </aside>
 				</section>
 				<section>
 					<h4>app-job-ad</h4>
@@ -487,6 +604,9 @@ window.eventBus.trigger('logged-in', 'sithmel3');
               ... open to "apply" modal ...
             });
           </code></pre>
+          <aside class="notes">
+            app-job-ad was listening for this event to go on with the application
+          </aside>
 				</section>
         <section data-background="assets/ideas.jpg" class="panel">
           <h4>Other use cases</h4>
@@ -496,6 +616,10 @@ window.eventBus.trigger('logged-in', 'sithmel3');
 						<li class="fragment">client side routing across microservices</li>
           </ul>
           <aside class="notes">
+            Working with this library we found and implemented other interesting use cases:
+            * using an event to change the state permanently. In a similar way to the "ready" event used by jquery
+            * an interesting use case is to log-in or log-out in a tab and change the state of other tabs
+            * html5 history API doesn't have an api to notify when the URL change
           </aside>
         </section>
         <section data-background="assets/map.jpg" class="panel">
