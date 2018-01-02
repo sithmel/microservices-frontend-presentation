@@ -185,10 +185,9 @@ In this example a fragment is not in the cache and is requested from the main se
         <section data-background="assets/paper.jpg" data-background-color="white" class="notebook">
           <h2>Client side JS issues</h2>
           <ul class="tickboxes">
-            <li class="fragment unticked"> Namespace conflicts</li>
-						<li class="fragment unticked"> Frontend Performance</li>
-						<li class="fragment unticked"> Keep services independent</li>
-						<li class="fragment unticked"> Microservices communication</li>
+            <li class="fragment"><span class="unticked">☐</span>Keep services independent</li>
+						<li class="fragment"><span class="unticked">☐</span>Frontend Performance</li>
+						<li class="fragment"><span class="unticked">☐</span>Microservices communication</li>
           </ul>
           <aside class="notes">
             So here it is, services are well isolated each other. And compoxure is taking care of both performance (with caching) and reliability (fallback). If only there was no client side javascript!
@@ -246,8 +245,8 @@ In this example a fragment is not in the cache and is requested from the main se
 				<section data-background="assets/paper.jpg" data-background-color="white" class="notebook">
 					<h4>Bundle client side js</h4>
           <ul class="tickboxes">
-            <li class="fragment ticked"> Namespace conflicts</li>
-						<li class="fragment crossed"> Frontend Performance</li>
+            <li class="fragment"><span class="fragment highlight-green"></span>Keep services independent</li>
+						<li class="fragment"><span class="fragment highlight-red"></span>Frontend Performance</li>
           </ul>
 					<p class="fragment">What about duplicated libraries?</p>
 				</section>
@@ -276,9 +275,8 @@ In this example a fragment is not in the cache and is requested from the main se
 				<section data-background="assets/paper.jpg" data-background-color="white" class="notebook">
 					<h4>Libraries in global namespace</h4>
 					<ul class="tickboxes">
-            <li class="fragment crossed"> Namespace conflicts</li>
-						<li class="fragment crossed"> Keep services independent</li>
-						<li class="fragment crossed"> Frontend Performance</li>
+            <li class="fragment"><span class="fragment highlight-red"></span>Keep services independent</li>
+						<li class="fragment"><span class="fragment highlight-red"></span>Frontend Performance</li>
           </ul>
           <p class="fragment">Synchronous js problem!</p>
           <aside class="notes">
@@ -411,10 +409,10 @@ In this example a fragment is not in the cache and is requested from the main se
         <section data-background="assets/paper.jpg" data-background-color="white" class="notebook">
           <h4>Using async-define:</h4>
 					<ul class="tickboxes">
-            <li class="fragment ticked"> Namespace conflicts</li>
-						<li class="fragment ticked"> Frontend Performance</li>
-            <li class="fragment crossed"> Keep services independent</li>
+            <li class="fragment"><span class="fragment highlight-green"></span>Frontend Performance</li>
+            <li class="fragment"><span class="fragment highlight-red"></span>Keep services independent</li>
           </ul>
+          <p class="fragment">Where should I put the common dependency?</p>
           <aside class="notes">
             The issue here is: what microservices should contain the common dependency?
           </aside>
@@ -487,24 +485,29 @@ In this example a fragment is not in the cache and is requested from the main se
 				<section data-background="assets/paper.jpg" data-background-color="white" class="notebook">
           <h4>Using async-define (with duplication):</h4>
 					<ul class="tickboxes">
-            <li class="fragment ticked"> Namespace conflicts</li>
-            <li class="fragment ticked"> Frontend Performance</li>
-						<li class="fragment ticked"> Keep services independent</li>
+            <li class="fragment"><span class="fragment highlight-green"></span>Frontend Performance</li>
+            <li class="fragment"><span class="fragment highlight-green"></span>Keep services independent</li>
           </ul>
           <aside class="notes">
             This solved ticked all boxes for us
           </aside>
         </section>
+        <section data-background="assets/phone.jpg" data-background-color="white" class="phone">
+          <h4>Microservices</h4>
+          <h4>communication</h4>
+        </section>
 
 				<section>
-					<h4>Microservices communication</h4>
+					<h5>Microservices communication</h5>
+          <h5>Using the global namespace</h5>
           <div class="fragment">
-            <h5>Using the global namespace</h5>
             <p>mservice1:</p>
             <pre><code data-trim data-noescape>
               ...
               window.mservice1ExternalAPI = mservice1ExternalAPI;
             </code></pre>
+          </div>
+          <div class="fragment">
             <p>mservice2:</p>
             <pre><code data-trim data-noescape>
               ...
@@ -522,8 +525,8 @@ In this example a fragment is not in the cache and is requested from the main se
 					<h4>Microservices communication</h4>
 					<h5>Using the global namespace</h5>
 					<ul class="tickboxes">
-            <li class="fragment crossed"> Namespace conflicts</li>
-						<li class="fragment crossed"> Keep services independent</li>
+            <li class="fragment"><span class="fragment highlight-green"></span>Microservices communication</li>
+						<li class="fragment"><span class="fragment highlight-red"></span>Keep services independent</li>
           </ul>
           <aside class="notes">
             Using the global namespace is problematic because we are back at polluting the namespace
@@ -540,9 +543,8 @@ In this example a fragment is not in the cache and is requested from the main se
 				<section data-background="assets/paper.jpg" data-background-color="white" class="notebook">
 					<h4>Solution: use an event bus</h4>
 					<ul class="tickboxes">
-						<li class="fragment ticked"> Microservices communication</li>
-						<li class="fragment ticked"> Namespace conflicts</li>
-						<li class="fragment ticked"> Keep services independent</li>
+            <li class="fragment"><span class="fragment highlight-green"></span>Microservices communication</li>
+						<li class="fragment"><span class="fragment highlight-green"></span>Keep services independent</li>
 					</ul>
 				</section>
 

@@ -52,27 +52,46 @@ blockquote {
   list-style-type: none;
 }
 
-.unticked:before {
-  content: '☐';
-  margin-right: 10px;
+.unticked {
+  margin-right: 10px !important;
   position: relative;
   top: 2px;
 }
 
-.ticked:before {
-  content: '☑';
+.ticked {
   color:green;
-  margin-right: 10px;
+  margin-right: 10px !important;
   position: relative;
   top: 2px;
 }
 
-.crossed:before {
-  content: '☒';
+.crossed {
   color:red;
-  margin-right: 10px;
+  margin-right: 10px !important;
   position: relative;
   top: 2px;
+}
+
+.highlight-green:before {
+  content: '☐';
+  margin-right: 10px !important;
+  position: relative;
+  top: 2px;
+}
+
+.highlight-red:before {
+  content: '☐';
+  margin-right: 10px !important;
+  position: relative;
+  top: 2px;
+}
+
+.highlight-green.visible:before {
+  content: '☑';
+}
+
+.highlight-red.visible:before {
+  content: '☒';
 }
 
 @keyframes beat {
@@ -127,4 +146,8 @@ blockquote {
 h6.panel {
   display: inline-block;
   padding: 15px;
+}
+
+.phone h4{
+  text-align: right;
 }
